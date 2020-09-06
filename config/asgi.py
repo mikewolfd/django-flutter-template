@@ -8,11 +8,12 @@ https://docs.djangoproject.com/en/3.0/howto/deployment/asgi/
 """
 
 import os, sys
+from pathlib import Path
 
 from django.core.asgi import get_asgi_application
 
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-sys.path.append(str(BASE_DIR / "gendjango"))
+ROOT_DIR = Path(__file__).resolve(strict=True).parent.parent.parent
+sys.path.append(str(ROOT_DIR / "gendjango"))
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "config.settings.local")
 
