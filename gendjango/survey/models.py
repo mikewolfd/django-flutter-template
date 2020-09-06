@@ -1,10 +1,8 @@
 from django.db import models
-from django.contrib.postgres.fields import JSONField
 from django.contrib.auth import get_user_model
 
 from django.utils.translation import ugettext_lazy as _
 from typedmodels.models import TypedModel
-from mptt.models import MPTTModel, TreeForeignKey
 from model_utils.models import TimeStampedModel
 
 User = get_user_model()
@@ -13,7 +11,7 @@ User = get_user_model()
 class Survey(models.Model):
     name = models.CharField(max_length=200)
     version = models.DecimalField(max_digits=5, decimal_places=2, blank=True, null=True)
-    metadata = JSONField(null=True, blank=True)
+    metadata = models.JSONField(null=True, blank=True)
 
     class Meta:
         unique_together = ['name', 'version']
@@ -25,7 +23,7 @@ class Catageory(models.Model):
 
 class AnswerType(TypedModel):
     default_choice = {}
-    choices = JSONField()
+    choices = models.JSONField()
 
     def save(self, *args, **kwargs):
         if self.choices is None:
@@ -53,13 +51,13 @@ class BooleanAnswer(AnswerType):
     default_choice = {False: 'No', True: 'Yes'}
 
 
-class Question(MPTTModel):
+class Question(models.Model):
     text = models.TextField(_("Text"))
-    metadata = JSONField(null=True, blank=True)
+    metadata = models.JSONField(null=True, blank=True)
     catageory = models.ForeignKey(Catageory, on_delete=models.CASCADE)
-    conditional_trigger = JSONField(null=True, blank=True)
+    conditional_trigger = models.JSONField(null=True, blank=True)
 
-    parent = TreeForeignKey('self', on_delete=models.CASCADE, null=True, blank=True, related_name='children')
+    parent = models.ForeignKey('self', on_delete=models.SET_NULL, null=True, blank=True, related_name='children')
 
     choices = models.ForeignKey(
         AnswerType, on_delete=models.PROTECT, verbose_name=_("AnswerType"), related_name="questions"
@@ -76,11 +74,12 @@ class Question(MPTTModel):
         super(Question, self).save(*args, **kwargs)
 
 
-class SurveyItem(MPTTModel):
+class SurveyItem(models.Model):
     order = models.IntegerField(default=0)
+    depth = models.IntegerField(default=0)
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
     survey = models.ForeignKey(Survey, on_delete=models.CASCADE)
-    parent = TreeForeignKey('self', on_delete=models.CASCADE, null=True, blank=True, related_name='children')
+    parent = models.ForeignKey('self', on_delete=models.CASCADE, null=True, blank=True, related_name='children')
 
     class Meta:
         unique_together = ['question', 'survey']
@@ -90,7 +89,7 @@ class SurveyItem(MPTTModel):
 
     def save(self, *args, **kwargs):
         if not self.order:
-            if parent:
+            if self.parent:
                 self.order = self.parent.children.count() + 1
             else:
                 self.order = self.survey.surveyitem_set.count() + 1
@@ -100,7 +99,7 @@ class SurveyItem(MPTTModel):
 class SurveyItemRecord(TimeStampedModel):
     user = models.ForeignKey(User, on_delete=models.PROTECT)
     item = models.ForeignKey(SurveyItem, on_delete=models.PROTECT)
-    answer = JSONField()
+    answer = models.JSONField()
 
     class Meta:
         unique_together = ['user', 'item']

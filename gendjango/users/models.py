@@ -8,6 +8,7 @@ class User(AbstractUser):
     """Default user.
     """
 
+    USERNAME_FIELD = 'email'
     #: First and last name do not cover name patterns around the globe
     name = CharField(_("Name of User"), blank=True, max_length=255)
 

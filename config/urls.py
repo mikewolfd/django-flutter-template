@@ -17,11 +17,15 @@ from django.contrib import admin
 from django.urls import include, path
 from django.conf import settings
 from django.views import defaults as default_views
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from rest_framework.authtoken.views import obtain_auth_token
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
     TokenRefreshView,
 )
+
+from gendjango.users.api.views import UserRetrieveUpdateAPIView
+
 urlpatterns = [
     path(settings.ADMIN_URL, admin.site.urls),
     # API base url
@@ -30,9 +34,10 @@ urlpatterns = [
     path("auth-token/", obtain_auth_token),
     path("api/token/", TokenObtainPairView.as_view(), name="token_obtain_pair"),
     path("api/token/refresh/", TokenRefreshView.as_view(), name="token_refresh"),
+    path("user/update", UserRetrieveUpdateAPIView.as_view()),
 ]
 
-
+urlpatterns += staticfiles_urlpatterns()
 if settings.DEBUG:
     # This allows the error pages to be debugged during development, just visit
     # these url in browser to see how these error pages look like.
