@@ -6,12 +6,21 @@ from rest_framework.response import Response
 from rest_framework.viewsets import GenericViewSet
 from rest_framework.views import APIView
 from rest_framework.generics import RetrieveUpdateAPIView
-from rest_framework.permissions import AllowAny, IsAuthenticated
+from rest_framework.permissions import AllowAny, IsAuthenticated, IsAdminUser
 from .serializers import UserSerializer
+from rest_framework_simplejwt.tokens import RefreshToken
+
 
 User = get_user_model()
 
+def get_tokens_for_user(user):
+    refresh = RefreshToken.for_user(user)
 
+    return {
+        'refresh': str(refresh),
+        'access': str(refresh.access_token),
+    }
+    
 class UserViewSet(RetrieveModelMixin, ListModelMixin, UpdateModelMixin, GenericViewSet):
     serializer_class = UserSerializer
     queryset = User.objects.all()
@@ -30,13 +39,6 @@ class CreateUserAPIView(CreateModelMixin, GenericViewSet):
     permission_classes = (AllowAny,)
     queryset = User.objects.all()
     serializer_class = UserSerializer
-
-    def post(self, request):
-        user = request.data
-        serializer = UserSerializer(data=user)
-        serializer.is_valid(raise_exception=True)
-        serializer.save()
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 class UserRetrieveUpdateAPIView(RetrieveUpdateAPIView):
  
