@@ -76,7 +76,6 @@ class Question(models.Model):
 
 class SurveyItem(models.Model):
     order = models.IntegerField(default=0)
-    depth = models.IntegerField(default=0)
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
     survey = models.ForeignKey(Survey, on_delete=models.CASCADE)
     parent = models.ForeignKey('self', on_delete=models.CASCADE, null=True, blank=True, related_name='children')
