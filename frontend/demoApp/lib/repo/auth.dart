@@ -25,8 +25,9 @@ class AuthenticationRepository {
   Stream<User> get user async* {
     if (await system.hasToken()) {
       yield await system.getUser();
+    } else {
+      yield User.empty;
     }
-    yield User.empty;
     yield* _controller.stream;
   }
 
