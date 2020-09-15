@@ -18,11 +18,10 @@ from django.urls import include, path
 from django.conf import settings
 from django.views import defaults as default_views
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
-from rest_framework.authtoken.views import obtain_auth_token
 from rest_framework_simplejwt.views import (
-    TokenObtainPairView,
     TokenRefreshView,
 )
+from .token import MyTokenObtainPairView
 
 from gendjango.users.api.views import UserRetrieveUpdateAPIView
 
@@ -31,8 +30,7 @@ urlpatterns = [
     # API base url
     path("api/", include("config.api_router")),
     # DRF auth token
-    path("auth-token/", obtain_auth_token),
-    path("api/token/", TokenObtainPairView.as_view(), name="token_obtain_pair"),
+    path("api/token/", MyTokenObtainPairView.as_view(), name="token_obtain_pair"),
     path("api/token/refresh/", TokenRefreshView.as_view(), name="token_refresh"),
     path("user/update", UserRetrieveUpdateAPIView.as_view()),
 ]
