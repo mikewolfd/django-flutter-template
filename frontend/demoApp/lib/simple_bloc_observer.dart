@@ -3,6 +3,7 @@ import 'package:bloc/bloc.dart';
 class SimpleBlocObserver extends BlocObserver {
   @override
   void onEvent(Bloc bloc, Object event) {
+    print(bloc);
     print(event);
     super.onEvent(bloc, event);
   }
@@ -21,6 +22,7 @@ class SimpleBlocObserver extends BlocObserver {
 
   @override
   void onTransition(Bloc bloc, Transition transition) {
+    print(bloc);
     print(transition);
     super.onTransition(bloc, transition);
   }

@@ -47,7 +47,6 @@ class AuthenticationBloc
     AuthenticationUserChanged event,
   ) {
     {
-      print(event);
       return event.user != User.empty
           ? AuthenticationState.authenticated(event.user)
           : const AuthenticationState.unauthenticated();

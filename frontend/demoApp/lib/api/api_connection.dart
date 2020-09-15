@@ -8,7 +8,6 @@ final _base = "http://127.0.0.1:8000";
 Future<KeyResponse> getToken(UserLogin userLogin) async {
   final _tokenEndpoint = "/api/token/";
   final _tokenURL = _base + _tokenEndpoint;
-  print(_tokenURL);
   final http.Response response = await http.post(
     _tokenURL,
     headers: <String, String>{
@@ -28,7 +27,6 @@ Future<KeyResponse> getToken(UserLogin userLogin) async {
 Future<AccessToken> updateToken(RefreshToken keyResponse) async {
   final _tokenEndpoint = "/api/token/refresh/";
   final _tokenURL = _base + _tokenEndpoint;
-  print(_tokenURL);
   final http.Response response = await http.post(
     _tokenURL,
     headers: <String, String>{
@@ -47,7 +45,6 @@ Future<AccessToken> updateToken(RefreshToken keyResponse) async {
 Future<User> getUser(KeyResponse keyResponse) async {
   final _tokenEndpoint = "/user/update";
   final _tokenURL = _base + _tokenEndpoint;
-  print(_tokenURL);
   final http.Response response = await http.get(
     _tokenURL,
     headers: <String, String>{
@@ -68,7 +65,6 @@ Future<User> getUser(KeyResponse keyResponse) async {
 Future<User> createUser(UserCreation userCreation) async {
   final _tokenEndpoint = "/api/create_user/";
   final _tokenURL = _base + _tokenEndpoint;
-  print(_tokenURL);
   final http.Response response = await http.post(
     _tokenURL,
     headers: <String, String>{
