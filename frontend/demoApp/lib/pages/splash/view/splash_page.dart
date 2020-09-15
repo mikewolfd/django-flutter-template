@@ -11,7 +11,7 @@ class SplashPage extends LoadingIndicator {
     return Scaffold(
       body: Center(
         child: Image.asset(
-          'assets/bloc_logo_small.png',
+          'assets/images/covid-2.png',
           key: const Key('splash_bloc_image'),
           width: 150,
         ),
