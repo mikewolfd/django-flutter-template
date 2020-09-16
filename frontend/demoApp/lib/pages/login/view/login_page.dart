@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:demoApp/pages/login/login.dart';
 import 'package:flutter/material.dart';
 import 'package:demoApp/style/color_utils.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class LoginPage extends StatelessWidget {
   static Route route() {
@@ -23,7 +22,7 @@ class LoginPage extends StatelessWidget {
             child: Stack(
               children: <Widget>[
                 Container(
-                  height: MediaQuery.of(context).size.height * 0.70,
+                  // height: MediaQuery.of(context).size.height * 0.70,
                   width: double.infinity,
                   decoration:
                       BoxDecoration(gradient: ColorUtils.appBarGradient),
@@ -33,21 +32,20 @@ class LoginPage extends StatelessWidget {
                     child: Padding(
                       padding: const EdgeInsets.only(top: 80),
                       child: Text(
-                        "Login",
+                        "ronaTrack",
                         style: TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.w800,
-                            fontSize: 19),
+                            fontSize: 30),
                       ),
                     )),
                 Positioned(
-                  top: 150,
+                  top: 140,
                   left: 10,
                   right: 10,
                   child: Column(children: <Widget>[
                     _buildLogo(),
                     LoginForm(),
-                    _buildSignUp()
                   ]),
                 )
               ],
@@ -60,34 +58,11 @@ class LoginPage extends StatelessWidget {
 
   Widget _buildLogo() {
     return Padding(
-      padding: const EdgeInsets.only(top: 10),
+      padding: const EdgeInsets.only(top: 10, bottom: 20),
       child: Image.asset(
-        "images/nextt.png",
+        "images/covid-2.png",
         height: 125,
         width: 125,
-      ),
-    );
-  }
-
-  Widget _buildSignUp() {
-    return Padding(
-      padding: const EdgeInsets.only(top: 15),
-      child: RichText(
-        text: TextSpan(
-          children: <TextSpan>[
-            TextSpan(
-              text: "Don't have an Account ? ",
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
-            ),
-            TextSpan(
-              text: 'Register',
-              style: TextStyle(
-                  fontWeight: FontWeight.w800,
-                  color: Colors.orange,
-                  fontSize: 14),
-            ),
-          ],
-        ),
       ),
     );
   }

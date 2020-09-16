@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class ColorUtils {
-  static const Color primaryColor = Color(0xff4BB7AD);
+  static const Color primaryColor = Color(0xffDF392E);
   static const Color accentColor = Color(0xffFF4E00);
   static const Color orangeGradientEnd = Color(0xfffc4a1a);
   static const Color orangeGradientStart = Color(0xfff7b733);
-  static const Color themeGradientStart = Color(0xFF8E24AA);
-  static const Color themeGradientEnd = Color(0xFFFB8C00);
+  static const Color themeGradientStart = Color(0xFFEC692D);
+  static const Color themeGradientEnd = Color(0xFFEAA23F);
   static const LinearGradient appBarGradient =
       LinearGradient(colors: [themeGradientStart, themeGradientEnd]);
 }

@@ -53,7 +53,7 @@ Widget _buildIntroText() {
         padding: const EdgeInsets.only(top: 5, bottom: 5),
         child: Column(children: [
           Text(
-            "nextt",
+            "Login",
             style: TextStyle(
                 color: Colors.black54,
                 fontSize: 24.0,
